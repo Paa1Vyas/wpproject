@@ -8,7 +8,7 @@ if(isset($_SESSION['customer_id'])) {
 } else {
     // User is not logged in, handle accordingly
     // Redirect to login page or display a message
-    header("Location: login_form.php");
+    header("Location: loginadmin.php");
     exit();
 }
 

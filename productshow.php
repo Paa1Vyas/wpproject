@@ -21,6 +21,7 @@
             <th>Product ID</th>
             <th>Name</th>
             <th>Price</th>
+            <th>Margined Price</th>
             <th>Category</th>
             <th>Description</th>
             <th>Image</th>
@@ -29,30 +30,23 @@
 
         <?php
         // Database connection
-        $servername = "localhost";
-        $username = "root"; // Change to your database username
-        $password = ""; // Change to your database password
-        $dbname = "trial_project"; // Change to your database name
-
-        // Create connection
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        include "db_conn.php";
 
         // Fetch data from product table
-        $sql = "SELECT pid, name, price, category, description, image FROM product";
+        $sql = "SELECT pid, name, price, webprice, category, description, image FROM product";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             // Output data of each row
             while($row = $result->fetch_assoc()) {
+                // Calculate margined price
+                
+
                 echo "<tr>";
                 echo "<td>". $row["pid"] ."</td>";
                 echo "<td>" . $row["name"] . "</td>";
                 echo "<td>₹" . $row["price"] . "</td>";
+                echo "<td>₹" . $row["webprice"] . "</td>"; // Display web price
                 echo "<td>" . $row["category"] . "</td>";
                 echo "<td>" . $row["description"] . "</td>";
                 echo "<td><img src='uploads/" . $row["image"] . "' alt='" . $row["name"] . "' style='max-width: 100px;'></td>";
@@ -66,16 +60,11 @@
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='7'>No products found</td></tr>";
+            echo "<tr><td colspan='8'>No products found</td></tr>";
         }
-
-        // Close connection
-        $conn->close();
 
         // Process delete request
         if(isset($_POST['delete'])) {
-            include "db_conn.php";
-
             $delete_pid = $_POST['delete_pid'];
             $sql = "DELETE FROM product WHERE pid='$delete_pid'";
             if ($conn->query($sql) === TRUE) {
@@ -84,7 +73,6 @@
             } else {
                 echo "Error deleting product: " . $conn->error;
             }
-            $conn->close();
         }
         ?>
     </table>

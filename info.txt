@@ -1,6 +1,6 @@
 Display Files			Support Files
 
-
+   
 uploadproduct 		-->	upload.php
 pendingordershow	-->	process_accept.php,process_reject.php
 displayorders		-->	(no file)	
@@ -9,8 +9,5 @@ registration		-->	process_order.php
 productshow		-->	update_product.php
 manageuser		-->	(no file)
 createcategory		-->	crtcategory.php,update_category.php -> process_update_category.php ,delete_category.php -> process_delete_category.php
-register		-->	register_process.php
 
-
-
-
+Note*:- ama Delete Category and delete product ma thodik error ave che thai atle solve karine moklis 
