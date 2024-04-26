@@ -19,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pid = $_POST['pid'];
     $name = $_POST['name'];
     $price = $_POST['price'];
+    $webprice =$_POST['webprice'];
     $category = $_POST['category'];
     $description = $_POST['description'];
 
@@ -32,10 +33,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         move_uploaded_file($temp_name, $image_folder.$image);
         
         // Update product data including image
-        $sql = "UPDATE product SET name='$name', price='$price', category='$category', description='$description', image='$image' WHERE pid='$pid'";
+        $sql = "UPDATE product SET name='$name', price='$price', webprice='$webprice', category='$category', description='$description', image='$image' WHERE pid='$pid'";
     } else {
         // Update product data excluding image
-        $sql = "UPDATE product SET name='$name', price='$price', category='$category', description='$description' WHERE pid='$pid'";
+        $sql = "UPDATE product SET name='$name', price='$price', webprice='$webprice', category='$category', description='$description' WHERE pid='$pid'";
     }
 
     // Execute SQL query

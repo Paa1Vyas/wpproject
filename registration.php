@@ -8,7 +8,7 @@ if(isset($_SESSION['customer_id'])) {
 } else {
     // User is not logged in, handle accordingly
     // Redirect to login page or display a message
-    header("Location: loginadmin.php");
+    header("Location: loginform.php");
     exit();
 }
 
@@ -64,10 +64,12 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Form</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
     <h2>Order Form</h2>
-    <form action="process_order.php" method="POST">
+    <form id="orderForm" method="POST">
+
         <h3>Product</h3>
         <input type="hidden" name="pid" value="<?php echo $p_id; ?>">
         <label for="product_name">Product Name:</label>
@@ -100,7 +102,76 @@ $conn->close();
         <input type="hidden" name="pid" value="<?php echo $p_id; ?>">
         <input type="hidden" name="c_id" value="<?php echo $c_id; ?>">
 
-        <input type="submit" value="Submit">
+        <input type="button" value="Pay Now" id="submitButton"> <!-- Changed type to "button" to prevent default form submission -->
     </form>
+
+    <script>
+        document.getElementById("submitButton").addEventListener("click", function() {
+            // Fetch amount and currency
+            var amount = document.getElementById("product_price").value;
+
+            // Prepare options for Razorpay checkout
+            var options = {
+                key: 'rzp_test_3z40UJhhML6EE6',
+                amount: amount * 100, // amount in paisa
+                currency: 'INR',
+                name: 'Your Company Name',
+                description: 'Product Purchase',
+                image: 'https://example.com/your_logo.png',
+                handler: function(response) {
+                    // Handle payment success
+                    console.log(response);
+                    // Redirect or perform further actions as needed
+                    sendOrderData(response);
+                },
+                prefill: {
+                    name: '<?php echo $customer_name; ?>',
+                    email: '<?php echo $email; ?>',
+                    contact: '<?php echo $mobile_number; ?>'
+                },
+                theme: {
+                    color: '#F37254'
+                }
+            };
+
+            // Open Razorpay checkout
+            var rzp = new Razorpay(options);
+            rzp.open();
+        });
+
+        function sendOrderData(response) {
+            // Extracting relevant data from the response
+            var paymentId = response.razorpay_payment_id;
+            var orderId = response.razorpay_order_id;
+            var signature = response.razorpay_signature;
+
+            // Gather other form data
+            var formData = new FormData(document.getElementById("orderForm"));
+
+            // Append payment data to form data
+            formData.append("payment_id", paymentId);
+            formData.append("order_id", orderId);
+            formData.append("signature", signature);
+
+            // Send form data to process_order.php using AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "process_order.php", true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        // Order processing successful, handle response
+                        console.log(xhr.responseText);
+                        // Redirect or perform further actions as needed
+                    } else {
+                        // Order processing failed, handle error
+                        console.error("Error processing order:", xhr.responseText);
+                        // Display error message to user or take appropriate action
+                    }
+                }
+            };
+            xhr.send(formData); // Send form data
+        }
+    </script>
+
 </body>
 </html>

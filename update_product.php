@@ -38,8 +38,10 @@ if(isset($_GET['id']) && !empty($_GET['id'])) {
                 <input type="hidden" name="pid" value="<?php echo $row['pid']; ?>">
                 <label for="name">Name:</label><br>
                 <input type="text" id="name" name="name" value="<?php echo $row['name']; ?>"><br>
-                <label for="price">Price:</label><br>
+                <label for="price">Original Price:</label><br>
                 <input type="text" id="price" name="price" value="<?php echo $row['price']; ?>"><br>
+                <label for="price">Marginal Price:</label><br>
+                <input type="text" id="webprice" name="webprice" value="<?php echo $row['webprice']; ?>"><br>
                 <label for="category">Category:</label><br>
                 <input type="text" id="category" name="category" value="<?php echo $row['category']; ?>"><br>
                 <label for="description">Description:</label><br>

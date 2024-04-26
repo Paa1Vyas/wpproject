@@ -13,7 +13,7 @@ if(isset($_SESSION['customer_id'])) {
 // Database credentials
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = ""; 
 $dbname = "trial_project";
 
 // Create connection
@@ -25,7 +25,7 @@ if ($conn->connect_error) {
 }
 
 // Fetch products from the database
-$sql = "SELECT pid, name, price, category, description, image FROM product";
+$sql = "SELECT pid, name, webprice, category, description, image FROM product";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -33,7 +33,7 @@ if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         echo "<div>";
         echo "<h3>" . $row["name"] . "</h3>";
-        echo "<p>Price: $" . $row["price"] . "</p>";
+        echo "<p>Price:₹    " . $row["webprice"] . "</p>";
         echo "<p>Category: " . $row["category"] . "</p>";
         echo "<p>Description: " . $row["description"] . "</p>";
         echo "<td><img src='uploads/" . $row["image"] . "' alt='" . $row["name"] . "' style='max-width: 100px;'></td>";
