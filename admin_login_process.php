@@ -1,7 +1,7 @@
     <?php
     session_start();
 
-    echo "Form submitted";
+    echo "Form submitted";  
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $uname = $_POST["uname"];
