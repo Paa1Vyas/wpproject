@@ -1,0 +1,26 @@
+
+.table
+{
+    position: absolute;
+    left: 100%;
+    width: 75vw;
+    cursor: pointer;
+    height: 85vh;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+
+}
+th, td {
+    border: 1px solid black;
+
+    padding: 8px;
+    text-align: center;
+    cursor: pointer;
+    
+}
+
+
+/* uploadprodcut.php */

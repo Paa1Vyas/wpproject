@@ -1,0 +1,23 @@
+.products_details
+{  
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    flex-direction: row;
+}
+
+.product_data
+{
+    margin-left: 2%;
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+
+    
+}
+
+.Description
+{
+
+}
