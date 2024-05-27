@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+
 // Check if the user is logged in
 if(isset($_SESSION['customer_id'])) {
     // User is logged in, fetch customer ID
