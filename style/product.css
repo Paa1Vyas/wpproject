@@ -1,7 +1,18 @@
+body {
+  /* border: 1px solid black;
+  height: 100vh;
+  width: 75vw;
+  position: absolute;
+  left: 25%;
+  width: 75vw; */
+}
 .table {
   position: absolute;
-  right: 25%;
+  left: 25%;
   width: 75vw;
+  padding: 2%;
+  height: 100%;
+  /* border: 1px solid black; */
   cursor: pointer;
   height: 85vh;
 }

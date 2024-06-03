@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Update Products</title>
-    <link rel="stylesheet" href='style/productshow.css'>
+    <link rel="stylesheet" href='style/product.css'>
 </head>
-<body>
-    <h2>Update Products</h2>
-    <?php include 'sidebar.php' ?>
-    <table>
-        <tr>
-            <th>Product ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Margined Price</th>
-            <th>Category</th>
-            <th>Description</th>
-            <th>Image</th>
-            <th>Action</th>
-        </tr>
 
-        <?php
+<body>
+
+    <?php include 'sidebar.php'; ?>
+
+    <div class="table">
+        <table>
+            <h2>Update Products</h2>
+            <tr>
+                <th>Product ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Margined Price</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
+
+            <?php
         // Database connection
         include "db_conn.php";
 
@@ -66,6 +71,8 @@
             }
         }
         ?>
-    </table>
+        </table>
+    </div>
 </body>
+
 </html>

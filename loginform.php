@@ -1,4 +1,3 @@
-<!-- loginform.php -->
 <?php
 session_start();
 
@@ -51,15 +50,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 mysqli_stmt_store_result($stmt);
                 
                 // Check if email exists and password matches
-                if(mysqli_stmt_num_rows($stmt) == 1){                    
-                    // Password is correct, so start a new session
-                    session_start();
-                    
-                    // Store data in session variables
-                    $_SESSION["loggedin"] = true;
-                    $_SESSION["email"] = $email; // You can store other necessary data as well
-                    // Redirect user to the same page
-                    header("location: " . $_SERVER['PHP_SELF']);
+                if(mysqli_stmt_num_rows($stmt) == 1){
+                    // Bind result variables
+                    mysqli_stmt_bind_result($stmt, $c_id, $email_address, $c_password);
+                    if(mysqli_stmt_fetch($stmt)){
+                        // Password is correct, so start a new session
+                        session_start();
+                        
+                        // Store data in session variables
+                        $_SESSION["loggedin"] = true;
+                        $_SESSION["customer_id"] = $c_id; // Store customer_id in session
+                        $_SESSION["email"] = $email_address; // You can store other necessary data as well
+                        
+                        // Redirect user to product display page
+                        header("location: product_display.php");
+                    }
                 } else{
                     // Display an error message if email or password is not valid
                     $email_err = "No account found with that email or invalid password.";
@@ -79,14 +84,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
     <style>
-        body{ font: 14px sans-serif; }
-        .wrapper{ width: 360px; padding: 20px; }
+    body {
+        font: 14px sans-serif;
+    }
+
+    .wrapper {
+        width: 360px;
+        padding: 20px;
+    }
     </style>
 </head>
+
 <body>
     <div class="wrapper">
         <h2>Login</h2>
@@ -96,7 +109,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <label>Email</label>
                 <input type="text" name="email" value="<?php echo $email; ?>">
                 <span><?php echo $email_err; ?></span>
-            </div>    
+            </div>
             <div>
                 <label>Password</label>
                 <input type="password" name="password">
@@ -107,6 +120,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
             <p>Don't have an account? <a href="register.php">Sign up now</a>.</p>
         </form>
-    </div>    
+    </div>
 </body>
+
 </html>
